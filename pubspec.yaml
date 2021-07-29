@@ -38,6 +38,8 @@ dependencies:
 
 dev_dependencies:
   mockito: 
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 

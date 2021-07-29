@@ -48,10 +48,11 @@ Integration test with browser need more setup on driver.
 
 To test for web, determine which browser you want to test against and download the corresponding web driver:
 
-Chrome: Download ChromeDriver [https://chromedriver.chromium.org/downloads] 
-Firefox: Download GeckoDriver [https://github.com/mozilla/geckodriver/releases]
-Safari: Safari can only be tested on a Mac; the SafariDriver is already installed on Mac machines.
-Edge Download EdgeDriver [https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/] 
+- Chrome: Download ChromeDriver [https://chromedriver.chromium.org/downloads] 
+- Firefox: Download GeckoDriver [https://github.com/mozilla/geckodriver/releases]
+- Safari: Safari can only be tested on a Mac; the SafariDriver is already installed on Mac machines.
+- Edge Download EdgeDriver [https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/] 
+
 Launch the WebDriver, for example:
 
 ```

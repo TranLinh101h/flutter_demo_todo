@@ -14,6 +14,11 @@ class TodoModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updatePref() async {
+    var _pref = await SharedPreferences.getInstance();
+    await _pref.setString('todos', jsonEncode(_todos));
+  }
+
   Future<void> addTodo(String? value) async {
     _todos.add({
       'task': value ?? '',
@@ -23,9 +28,13 @@ class TodoModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updatePref() async {
-    var _pref = await SharedPreferences.getInstance();
-    await _pref.setString('todos', jsonEncode(_todos));
+  Future<void> updateTodo({
+    required int index,
+    bool done = true,
+  }) async {
+    _todos[index]['done'] = done;
+    await updatePref();
+    notifyListeners();
   }
 
   Future<void> deleteTodo({
@@ -36,11 +45,8 @@ class TodoModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateTodo({
-    required int index,
-    bool done = true,
-  }) async {
-    _todos[index]['done'] = done;
+  Future<void> truncateTodo() async {
+    _todos = [];
     await updatePref();
     notifyListeners();
   }

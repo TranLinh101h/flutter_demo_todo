@@ -18,6 +18,12 @@ flutter upgrade
 
 # Run the app
 
+Make sure to clean cache if there is any previous build
+
+```
+flutter clean
+```
+
 To run app with browser
 
 ```

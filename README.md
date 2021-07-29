@@ -1,3 +1,5 @@
+[![Tests](https://github.com/ltdangkhoa/flutter_demo_todo/actions/workflows/test.yml/badge.svg)](https://github.com/ltdangkhoa/flutter_demo_todo/actions/workflows/test.yml)
+
 # demo
 
 App Functionality:

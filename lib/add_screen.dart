@@ -1,6 +1,7 @@
 import 'package:demo/model/todo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddScreen extends StatelessWidget {
   @override
@@ -8,7 +9,7 @@ class AddScreen extends StatelessWidget {
     TextEditingController _controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add new todo'),
+        title: Text(AppLocalizations.of(context)!.titleAdd),
       ),
       body: Column(
         children: [
@@ -26,7 +27,7 @@ class AddScreen extends StatelessWidget {
                 Navigator.pop(context);
               });
             },
-            child: Text('Add'),
+            child: Text(AppLocalizations.of(context)!.add),
           ),
         ],
       ),

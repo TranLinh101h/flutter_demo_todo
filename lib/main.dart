@@ -1,7 +1,11 @@
 import 'package:demo/add_screen.dart';
 import 'package:demo/model/todo_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'model/locale_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,12 +19,22 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => TodoModel()),
+        ChangeNotifierProvider(
+          create: (context) => LocaleProvider(),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+        localizationsDelegates: [
+          AppLocalizations.delegate, // Add this line
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
         home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );
@@ -47,7 +61,41 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(widget.title),
+            SizedBox(
+              width: 55,
+              child: FlatButton(
+                  color: Colors.green,
+                  onPressed: () {
+                    // final provider =
+                    //     Provider.of<LocaleProvider>(context, listen: false);
+                    // provider.setLocale(Locale('en'));
+                  },
+                  child: Text(
+                    'EN',
+                    style: TextStyle(color: Colors.black, fontSize: 14),
+                  )),
+            ),
+            SizedBox(
+              width: 55,
+              child: FlatButton(
+                color: Colors.yellow,
+                onPressed: () {
+                  // final provider =
+                  //     Provider.of<LocaleProvider>(context, listen: false);
+                  // provider.setLocale(Locale('vi'));
+                },
+                child: Text(
+                  "VI",
+                  style: TextStyle(color: Colors.black, fontSize: 14),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
       body: Center(
         child: Consumer<TodoModel>(

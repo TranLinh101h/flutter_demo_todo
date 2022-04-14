@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'model/locale_provider.dart';
 
 void main() async {
@@ -14,14 +13,14 @@ void main() async {
 }
 
 Future<void> bootApp() async {
-  LocaleProvider provider = LocaleProvider();
-  await provider.fetchLocale();
-  print('---fetchLanguageModel: ${provider.locale.languageCode}---');
+  LocaleProvider languageModel = LocaleProvider();
+  await languageModel.fetchLocale();
+  print('---fetchLanguageModel: ${languageModel.locale.languageCode}---');
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => TodoModel()),
       ChangeNotifierProvider(
-        create: (context) => provider,
+        create: (context) => languageModel,
       )
     ],
     child: InitApp(),
@@ -31,15 +30,14 @@ Future<void> bootApp() async {
 class InitApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-  
-    return Consumer<LocaleProvider>(builder: (_, provider, child) {
-      print('---provider: ${provider.langCode}');
+    return Consumer<LocaleProvider>(builder: (_, languageModel, child) {
+      print('---provider: ${languageModel.langCode}');
       return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        locale: provider.locale,
+        locale: languageModel.locale,
         localizationsDelegates: [
           AppLocalizations.delegate, // Add this line
           GlobalMaterialLocalizations.delegate,

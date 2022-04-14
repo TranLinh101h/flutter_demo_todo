@@ -31,8 +31,7 @@ Future<void> bootApp() async {
 class InitApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool flag = false;
-    void fecthLanguage() {}
+  
     return Consumer<LocaleProvider>(builder: (_, provider, child) {
       print('---provider: ${provider.langCode}');
       return MaterialApp(

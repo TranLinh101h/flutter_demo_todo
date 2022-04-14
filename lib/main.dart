@@ -1,33 +1,46 @@
 import 'package:demo/add_screen.dart';
 import 'package:demo/model/todo_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'model/locale_provider.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await bootApp();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+Future<void> bootApp() async {
+  LocaleProvider provider = LocaleProvider();
+  await provider.fetchLocale();
+  print('---fetchLanguageModel: ${provider.locale.languageCode}---');
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => TodoModel()),
+      ChangeNotifierProvider(
+        create: (context) => provider,
+      )
+    ],
+    child: InitApp(),
+  ));
+}
 
+class InitApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => TodoModel()),
-        ChangeNotifierProvider(
-          create: (context) => LocaleProvider(),
-        )
-      ],
-      child: MaterialApp(
+    bool flag = false;
+    void fecthLanguage() {}
+    return Consumer<LocaleProvider>(builder: (_, provider, child) {
+      print('---provider: ${provider.langCode}');
+      return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+        locale: provider.locale,
         localizationsDelegates: [
           AppLocalizations.delegate, // Add this line
           GlobalMaterialLocalizations.delegate,
@@ -36,8 +49,8 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: AppLocalizations.supportedLocales,
         home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -64,15 +77,15 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(widget.title),
+            Text(AppLocalizations.of(context)!.title),
             SizedBox(
               width: 55,
               child: FlatButton(
                   color: Colors.green,
-                  onPressed: () {
-                    // final provider =
-                    //     Provider.of<LocaleProvider>(context, listen: false);
-                    // provider.setLocale(Locale('en'));
+                  onPressed: () async {
+                    final provider =
+                        Provider.of<LocaleProvider>(context, listen: false);
+                    await provider.setLocale('en');
                   },
                   child: Text(
                     'EN',
@@ -83,10 +96,10 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 55,
               child: FlatButton(
                 color: Colors.yellow,
-                onPressed: () {
-                  // final provider =
-                  //     Provider.of<LocaleProvider>(context, listen: false);
-                  // provider.setLocale(Locale('vi'));
+                onPressed: () async {
+                  final provider =
+                      Provider.of<LocaleProvider>(context, listen: false);
+                  await provider.setLocale('vi');
                 },
                 child: Text(
                   "VI",
